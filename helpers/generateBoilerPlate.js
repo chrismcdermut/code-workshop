@@ -5,7 +5,7 @@ const fs = require('fs');
 // TODO: split up challenges
 // TODO: add appDesignSection?
 // ////SETUP HERE//////
-const solutionName = 'findArrayIntersect';
+const solutionName = 'HeadSpace';
 // TODO: look into setting up map or enum for this
 /* challenge || dataStructure || algorithm || designPattern || concept */
 const codeChallengeType = 'challenge';
@@ -15,7 +15,7 @@ const spec = `${solutionName} Spec goes here!`;
 const notes = `${solutionName} Notes go here!`;
 
 // ////CHALLENGES BOILERPLATE//////
-const CONCEPTS_DIR = 'concepts';
+const CONCEPTS_DIR = 'challenges';
 
 // TODO: rename these challenge variables
 const conceptJS = `function ${solutionName}(input) {
