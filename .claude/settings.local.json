@@ -8,7 +8,8 @@
       "Bash(npm test:*)",
       "Bash(rm:*)",
       "Bash(ls:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(node:*)"
     ],
     "deny": []
   }

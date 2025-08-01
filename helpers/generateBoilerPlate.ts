@@ -1,231 +1,386 @@
 import * as fs from 'fs';
+import * as path from 'path';
+import * as readline from 'readline';
 
-// TODO: make this take arguments
-// TODO: allow for classes in concepts/challenges
-// TODO: split up challenges
-// TODO: add appDesignSection?
-// ////SETUP HERE//////
-const solutionName = 'HeadSpace';
-// TODO: look into setting up map or enum for this
-/* challenge || dataStructure || algorithm || designPattern || concept */
 type CodeChallengeType = 'challenge' | 'dataStructure' | 'algorithm' | 'designPattern' | 'concepts';
-const codeChallengeType: CodeChallengeType = 'challenge';
 
-// ////UNIFORM SPEC/NOTES BOILERPLATE//////
-const spec = `${solutionName} Spec goes here!`;
-const notes = `${solutionName} Notes go here!`;
-
-// ////CHALLENGES BOILERPLATE//////
-const CONCEPTS_DIR = 'challenges';
-
-// TODO: rename these challenge variables
-const conceptJS = `function ${solutionName}(input) {
-
+interface BoilerplateConfig {
+  directory: string;
+  useClassTemplate: boolean;
 }
 
-module.exports = ${solutionName};
-`;
+const BOILERPLATE_CONFIGS: Record<CodeChallengeType, BoilerplateConfig> = {
+  concepts: {
+    directory: 'concepts',
+    useClassTemplate: false,
+  },
+  challenge: {
+    directory: 'challenges',
+    useClassTemplate: false,
+  },
+  dataStructure: {
+    directory: 'dataStructures',
+    useClassTemplate: true,
+  },
+  algorithm: {
+    directory: 'algorithms',
+    useClassTemplate: false,
+  },
+  designPattern: {
+    directory: 'designPatterns',
+    useClassTemplate: true,
+  },
+};
 
-const conceptTestJS = `const ${solutionName} = require('./${solutionName}')
+// Template generators
+const getFunctionTemplate = (name: string) => `function ${name}(input) {
+  // TODO: Implement ${name}
 
-const testOne = {
-  input: '',
-  output: ''
+  return input;
 }
 
-describe('${solutionName} Test', () => {
+module.exports = ${name};
 
-  test('testOne', ()=>{
-    let result = ${solutionName}(testOne.input)
-    expect(result).toEqual(testOne.output);
-  });
-
-});
-`;
-
-// ////CHALLENGES BOILERPLATE//////
-const CHALLENGES_DIR = 'challenges';
-
-// TODO: rename these challenge variables
-const solutionJS = `function ${solutionName}(input) {
-
-}
-
-module.exports = ${solutionName};
-`;
-
-const solutionTestJS = `const ${solutionName} = require('./${solutionName}')
-
-const testOne = {
-  input: '',
-  output: ''
-}
-
-describe('${solutionName} Test', () => {
-
-  test('testOne', ()=>{
-    let result = ${solutionName}(testOne.input)
-    expect(result).toEqual(testOne.output);
-  });
-
-});
-`;
-
-// ////DATA STRUCTURES BOILERPLATE//////
-const DATA_STRUCTURES_DIR = 'dataStructures';
-
-const dataStructureClassBP = `class ${solutionName} {
-  constructor() {
-  }
-}
-
-module.exports = ${solutionName};
-`;
-
-const dataStructureTestBP = `const ${solutionName} = require('./${solutionName}')
-
-const testOne = {
-  input: '',
-  output: ''
-}
-
-describe('${solutionName} Test', () => {
-
-  test('testOne', ()=>{
-    let result = ${solutionName}(testOne.input)
-    expect(result).toEqual(testOne.output);
-  });
-
-});
-`;
-
-// ////Algorithms BOILERPLATE//////
-const ALGORITHMS_DIR = 'algorithms';
-
-const algorithmJS = `function ${solutionName}(input) {
-
-}
-
-module.exports = ${solutionName};
-`;
-
-const algorithmTestJS = `const ${solutionName} = require('./${solutionName}')
-
-const testOne = {
-  input: '',
-  output: ''
-}
-
-describe('${solutionName} Test', () => {
-
-  test('testOne', ()=>{
-    let result = ${solutionName}(testOne.input)
-    expect(result).toEqual(testOne.output);
-  });
-
-});
-`;
-
-// ////EXECUTION CODE//////
-let directory = '';
-let boilerPlateCode = '';
-let boilerPlateTest = '';
-
-// TODO: look into using map for this, switch might be code smell?
-switch (codeChallengeType) {
-  case 'concepts':
-    directory = CONCEPTS_DIR;
-    boilerPlateCode = conceptJS;
-    boilerPlateTest = conceptTestJS;
-    break;
-  case 'challenge':
-    directory = CHALLENGES_DIR;
-    boilerPlateCode = solutionJS;
-    boilerPlateTest = solutionTestJS;
-    break;
-  case 'algorithm':
-    directory = ALGORITHMS_DIR;
-    boilerPlateCode = algorithmJS;
-    boilerPlateTest = algorithmTestJS;
-    break;
-  case 'dataStructure':
-  default:
-    directory = DATA_STRUCTURES_DIR;
-    boilerPlateCode = dataStructureClassBP;
-    boilerPlateTest = dataStructureTestBP;
-}
-
-function generateDefaultBoilerPlate(): void {
-  // make folder with solution name
-  // Creates /tmp/a/apple, regardless of whether `/tmp` and /tmp/a exist.
-  fs.mkdir(`./${directory}/${solutionName}`, { recursive: true }, (err) => {
-    if (err) throw err;
-  });
-
-  // make spec.md file -> //make ${solution}Spec.md file
-  fs.writeFile(
-    `./${directory}/${solutionName}/${solutionName}Spec.md`,
-    spec,
-    (err) => {
-      // throws an error, you could also catch it here
-      if (err) throw err;
-      // success case, the file was saved
-      console.log(`${solutionName}Spec.md saved!`); /* eslint-disable-line no-console */
-    },
-  );
-
-  // make notes.md file -> //make ${solution}notes.md file
-  fs.writeFile(
-    `./${directory}/${solutionName}/${solutionName}Notes.md`,
-    notes,
-    (err) => {
-      // throws an error, you could also catch it here
-      if (err) throw err;
-      // success case, the file was saved
-      console.log(`${solutionName}Notes.md saved!`); /* eslint-disable-line no-console */
-    },
-  );
-
-  // make solution.js file -> //make ${solution}solution.ts file
-  fs.writeFile(
-    `./${directory}/${solutionName}/${solutionName}.ts`,
-    boilerPlateCode,
-    (err) => {
-      // throws an error, you could also catch it here
-      if (err) throw err;
-      // success case, the file was saved
-      console.log(`${solutionName}.js saved!`); /* eslint-disable-line no-console */
-    },
-  );
-
-  // make solution.test.js file -> //make ${solution}solution.test.ts file
-  fs.writeFile(
-    `./${directory}/${solutionName}/${solutionName}.test.ts`,
-    boilerPlateTest,
-    (err) => {
-      // throws an error, you could also catch it here
-      if (err) throw err;
-      // success case, the file was saved
-      console.log(`${solutionName}.test.js saved!`); /* eslint-disable-line no-console */
-    },
-  );
-}
-
-export default generateDefaultBoilerPlate;
-
-// //////////NOTES////////////
-// TODO:: make dynamic BP
-// ////DYNAMIC BOILERPLATE ATTEMPT//////
-// const codeMap = {
-//   dataStructures: {
-//     name: 'dataStructures',
-//     directory: 'dataStructures',
-//     boilerPlate: `class ${solutionName} {
-//       constructor() {
-//       }
-//     }
-//
-//     module.exports = ${solutionName};
-//     `,
-//   },
+// Uncomment to run directly
+// module.exports.run${name} = function() {
+//   const example = '';
+//   console.log(${name}(example));
 // };
+`;
+
+const getClassTemplate = (name: string) => `class ${name} {
+  constructor() {
+    // TODO: Initialize ${name}
+  }
+
+  // TODO: Add methods
+}
+
+module.exports = ${name};
+
+// Uncomment to run directly
+// module.exports.run${name} = function() {
+//   const instance = new ${name}();
+//   console.log(instance);
+// };
+`;
+
+const getFunctionTestTemplate = (name: string) => `const ${name} = require('./${name}');
+
+describe('${name} Test', () => {
+  test('should handle basic case', () => {
+    const testCase = {
+      input: '',
+      expected: ''
+    };
+
+    const result = ${name}(testCase.input);
+    expect(result).toEqual(testCase.expected);
+  });
+
+  test('should handle edge case', () => {
+    // TODO: Add edge case test
+  });
+
+  test('should handle empty input', () => {
+    // TODO: Add empty input test
+  });
+});
+`;
+
+const getClassTestTemplate = (name: string) => `const ${name} = require('./${name}');
+
+describe('${name} Test', () => {
+  let instance;
+
+  beforeEach(() => {
+    instance = new ${name}();
+  });
+
+  test('should create instance', () => {
+    expect(instance).toBeDefined();
+    expect(instance).toBeInstanceOf(${name});
+  });
+
+  test('should initialize correctly', () => {
+    // TODO: Test initial state
+  });
+
+  test('should handle operations', () => {
+    // TODO: Test main operations
+  });
+});
+`;
+
+function generateBoilerPlate(solutionName: string, challengeType: CodeChallengeType): void {
+  const config = BOILERPLATE_CONFIGS[challengeType];
+
+  if (!config) {
+    console.error(`Invalid challenge type: ${challengeType}`);
+    console.error(`Valid types are: ${Object.keys(BOILERPLATE_CONFIGS).join(', ')}`);
+    process.exit(1);
+  }
+
+  const { directory, useClassTemplate } = config;
+  const targetPath = path.join(directory, solutionName);
+
+  // Create directory synchronously to ensure it exists before creating files
+  try {
+    fs.mkdirSync(targetPath, { recursive: true });
+    console.log(`📁 Directory created: ${targetPath}`);
+  } catch (err) {
+    console.error('Error creating directory:', err);
+    process.exit(1);
+  }
+
+  // Create spec file
+  const specContent = `# ${solutionName} Specification
+
+## Problem Description
+${solutionName} spec goes here!
+
+## Input
+- Describe the input format
+- Include type information
+- Specify any constraints
+
+## Output
+- Describe the expected output format
+- Include type information
+
+## Examples
+\`\`\`typescript
+Example 1:
+Input:
+Output:
+
+Example 2:
+Input:
+Output:
+\`\`\`
+
+## Constraints
+- List any constraints on input size
+- Time complexity requirements
+- Space complexity requirements
+
+## Edge Cases
+- Empty input
+- Single element
+- Maximum values
+- Minimum values
+`;
+
+  try {
+    fs.writeFileSync(
+      path.join(targetPath, `${solutionName}Spec.md`),
+      specContent
+    );
+    console.log(`📄 ${solutionName}Spec.md saved!`);
+  } catch (err) {
+    console.error('Error creating spec file:', err);
+    process.exit(1);
+  }
+
+  // Create notes file
+  const notesContent = `# ${solutionName} Notes
+
+## Approach
+Describe your approach here
+
+## Algorithm Steps
+1. Step one
+2. Step two
+3. Step three
+
+## Time Complexity
+- Best case: O(?)
+- Average case: O(?)
+- Worst case: O(?)
+
+## Space Complexity
+- O(?)
+
+## Key Insights
+- List key insights and observations
+- Any patterns recognized
+- Similar problems
+
+## Alternative Approaches
+- Describe other possible solutions
+- Trade-offs between approaches
+
+## Common Mistakes
+- List common pitfalls
+- Edge cases to watch for
+`;
+
+  try {
+    fs.writeFileSync(
+      path.join(targetPath, `${solutionName}Notes.md`),
+      notesContent
+    );
+    console.log(`📝 ${solutionName}Notes.md saved!`);
+  } catch (err) {
+    console.error('Error creating notes file:', err);
+    process.exit(1);
+  }
+
+  // Create main TypeScript file
+  const codeTemplate = useClassTemplate
+    ? getClassTemplate(solutionName)
+    : getFunctionTemplate(solutionName);
+
+  try {
+    fs.writeFileSync(
+      path.join(targetPath, `${solutionName}.ts`),
+      codeTemplate
+    );
+    console.log(`📦 ${solutionName}.ts saved!`);
+  } catch (err) {
+    console.error('Error creating TypeScript file:', err);
+    process.exit(1);
+  }
+
+  // Create test TypeScript file
+  const testTemplate = useClassTemplate
+    ? getClassTestTemplate(solutionName)
+    : getFunctionTestTemplate(solutionName);
+
+  try {
+    fs.writeFileSync(
+      path.join(targetPath, `${solutionName}.test.ts`),
+      testTemplate
+    );
+    console.log(`🧪 ${solutionName}.test.ts saved!`);
+  } catch (err) {
+    console.error('Error creating test file:', err);
+    process.exit(1);
+  }
+
+  console.log(`\n✅ Successfully created ${solutionName} ${challengeType}!`);
+  console.log(`📍 Location: ${targetPath}\n`);
+  console.log(`Next steps:`);
+  console.log(`1. Edit ${targetPath}/${solutionName}Spec.md to define the problem`);
+  console.log(`2. Implement the solution in ${targetPath}/${solutionName}.ts`);
+  console.log(`3. Add test cases to ${targetPath}/${solutionName}.test.ts`);
+  console.log(`4. Run tests with: npm test ${targetPath}/${solutionName}.test.ts`);
+}
+
+// Interactive prompt helper
+async function prompt(question: string): Promise<string> {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  return new Promise((resolve) => {
+    rl.question(question, (answer) => {
+      rl.close();
+      resolve(answer.trim());
+    });
+  });
+}
+
+// Interactive mode
+async function interactiveMode(): Promise<void> {
+  console.log('\n📚 Code Practice Boilerplate Generator\n');
+
+  // Get solution name
+  const solutionName = await prompt('Enter the name for your solution (e.g., TwoSum, LinkedList): ');
+
+  if (!solutionName) {
+    console.error('\n❌ Solution name cannot be empty!\n');
+    process.exit(1);
+  }
+
+  // Show challenge types
+  console.log('\nSelect a challenge type:\n');
+  console.log('  1) challenge      - Coding challenges (function-based)');
+  console.log('  2) dataStructure  - Data structure implementations (class-based)');
+  console.log('  3) algorithm      - Algorithm implementations (function-based)');
+  console.log('  4) designPattern  - Design pattern implementations (class-based)');
+  console.log('  5) concepts       - JavaScript/programming concepts (function-based)\n');
+
+  const typeChoice = await prompt('Enter your choice (1-5): ');
+
+  const typeMap: Record<string, CodeChallengeType> = {
+    '1': 'challenge',
+    '2': 'dataStructure',
+    '3': 'algorithm',
+    '4': 'designPattern',
+    '5': 'concepts',
+  };
+
+  const challengeType = typeMap[typeChoice];
+
+  if (!challengeType) {
+    console.error('\n❌ Invalid choice! Please select 1-5.\n');
+    process.exit(1);
+  }
+
+  console.log(`\n🚀 Creating ${solutionName} as ${challengeType}...\n`);
+  generateBoilerPlate(solutionName, challengeType);
+}
+
+// Parse command line arguments
+async function main(): Promise<void> {
+  const args = process.argv.slice(2);
+
+  // If no arguments provided, run interactive mode
+  if (args.length === 0) {
+    await interactiveMode();
+    return;
+  }
+
+  // If only one argument, assume it's the name and prompt for type
+  if (args.length === 1) {
+    const solutionName = args[0];
+    console.log(`\n📚 Creating boilerplate for: ${solutionName}\n`);
+    console.log('Select a challenge type:\n');
+    console.log('  1) challenge      - Coding challenges (function-based)');
+    console.log('  2) dataStructure  - Data structure implementations (class-based)');
+    console.log('  3) algorithm      - Algorithm implementations (function-based)');
+    console.log('  4) designPattern  - Design pattern implementations (class-based)');
+    console.log('  5) concepts       - JavaScript/programming concepts (function-based)\n');
+
+    const typeChoice = await prompt('Enter your choice (1-5): ');
+
+    const typeMap: Record<string, CodeChallengeType> = {
+      '1': 'challenge',
+      '2': 'dataStructure',
+      '3': 'algorithm',
+      '4': 'designPattern',
+      '5': 'concepts',
+    };
+
+    const challengeType = typeMap[typeChoice];
+
+    if (!challengeType) {
+      console.error('\n❌ Invalid choice! Please select 1-5.\n');
+      process.exit(1);
+    }
+
+    generateBoilerPlate(solutionName, challengeType);
+    return;
+  }
+
+  // If two arguments provided, use them directly
+  const [solutionName, challengeType] = args;
+
+  if (!Object.keys(BOILERPLATE_CONFIGS).includes(challengeType)) {
+    console.error(`\n❌ Invalid challenge type: ${challengeType}`);
+    console.error(`Valid types are: ${Object.keys(BOILERPLATE_CONFIGS).join(', ')}\n`);
+    console.error('Run without arguments for interactive mode.\n');
+    process.exit(1);
+  }
+
+  generateBoilerPlate(solutionName, challengeType as CodeChallengeType);
+}
+
+// Run the script if it's executed directly
+if (require.main === module) {
+  main().catch(console.error);
+}
+
+export default generateBoilerPlate;
