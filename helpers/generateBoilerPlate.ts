@@ -155,7 +155,7 @@ switch (codeChallengeType) {
     boilerPlateTest = dataStructureTestBP;
 }
 
-export function generateDefaultBoilerPlate(): void {
+function generateDefaultBoilerPlate(): void {
   // make folder with solution name
   // Creates /tmp/a/apple, regardless of whether `/tmp` and /tmp/a exist.
   fs.mkdir(`./${directory}/${solutionName}`, { recursive: true }, (err) => {
@@ -186,9 +186,9 @@ export function generateDefaultBoilerPlate(): void {
     },
   );
 
-  // make solution.js file -> //make ${solution}solution.js file
+  // make solution.js file -> //make ${solution}solution.ts file
   fs.writeFile(
-    `./${directory}/${solutionName}/${solutionName}.js`,
+    `./${directory}/${solutionName}/${solutionName}.ts`,
     boilerPlateCode,
     (err) => {
       // throws an error, you could also catch it here
@@ -198,9 +198,9 @@ export function generateDefaultBoilerPlate(): void {
     },
   );
 
-  // make solution.test.js file -> //make ${solution}solution.test.js file
+  // make solution.test.js file -> //make ${solution}solution.test.ts file
   fs.writeFile(
-    `./${directory}/${solutionName}/${solutionName}.test.js`,
+    `./${directory}/${solutionName}/${solutionName}.test.ts`,
     boilerPlateTest,
     (err) => {
       // throws an error, you could also catch it here
@@ -210,6 +210,8 @@ export function generateDefaultBoilerPlate(): void {
     },
   );
 }
+
+export default generateDefaultBoilerPlate;
 
 // //////////NOTES////////////
 // TODO:: make dynamic BP
