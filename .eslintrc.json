@@ -6,17 +6,49 @@
         "jest": true
     },
     "extends": [
-        "airbnb-base"
+        "airbnb-base",
+        "plugin:@typescript-eslint/recommended"
     ],
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["@typescript-eslint"],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
     },
     "parserOptions": {
-        "ecmaVersion": 2018
+        "ecmaVersion": 2018,
+        "sourceType": "module"
     },
     "rules": {
       "no-plusplus": 0,
-      "no-continue": 0
-    }
+      "no-continue": 0,
+      "import/extensions": [
+        "error",
+        "ignorePackages",
+        {
+          "js": "never",
+          "jsx": "never",
+          "ts": "never",
+          "tsx": "never"
+        }
+      ],
+      "@typescript-eslint/no-var-requires": "off",
+      "@typescript-eslint/explicit-module-boundary-types": "off",
+      "@typescript-eslint/no-this-alias": "off"
+    },
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "extensions": [".js", ".jsx", ".ts", ".tsx"]
+        }
+      }
+    },
+    "overrides": [
+      {
+        "files": ["*.ts", "*.tsx"],
+        "rules": {
+          "@typescript-eslint/no-this-alias": "error"
+        }
+      }
+    ]
 }

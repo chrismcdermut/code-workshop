@@ -1,4 +1,4 @@
-const { binarySearch, seekElementBinarySearch, runBinarySearch } = require('./binarySearch');
+import { binarySearch, seekElementBinarySearch, runBinarySearch } from './binarySearch';
 
 describe('binarySearch Test', () => {
   test('testOne', () => {
@@ -69,7 +69,7 @@ describe('binarySearch Test', () => {
         67: 11,
         89: 12,
         91: 13,
-      },
+      } as Record<number, number>,
       output: true,
     };
     let result = true;
@@ -163,7 +163,7 @@ describe('seekElementBinarySearch Test', () => {
         67: 11,
         89: 12,
         91: 13,
-      },
+      } as Record<number, number>,
       output: true,
     };
     let result = true;

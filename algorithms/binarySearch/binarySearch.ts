@@ -1,7 +1,7 @@
-function binarySearch(list, lookFor) {
+function binarySearch(list: number[], lookFor: number): number {
   let min = 0;
   let max = list.length;
-  let middle;
+  let middle: number;
 
   // while there is something to search for
   while (min <= max) {
@@ -20,10 +20,10 @@ function binarySearch(list, lookFor) {
   return -1; /* TODO: consolidate return statements */
 }
 
-function seekElementBinarySearch(array, seekingElement) {
+function seekElementBinarySearch(array: number[], seekingElement: number): number {
   let bottomElementIndex = 0;
   let topElementIndex = array.length - 1;
-  let middleIndex;
+  let middleIndex: number;
 
   let finalIndex = -1;
   while (bottomElementIndex <= topElementIndex) {
@@ -45,11 +45,11 @@ function seekElementBinarySearch(array, seekingElement) {
   return finalIndex;
 }
 
-module.exports = { binarySearch, seekElementBinarySearch };
+export { binarySearch, seekElementBinarySearch };
 
 // TODO: make this take arguments
-module.exports.runBinarySearch = function runBinarySearch() {
+export function runBinarySearch(): void {
   const exampleList = [1, 2, 3, 4, 7, 11, 14, 16, 23, 34, 56, 67, 89, 91];
   // answer 11
   console.log(binarySearch(exampleList, 67)); /* eslint-disable-line no-console */
-};
+}

@@ -1,4 +1,4 @@
-const fs = require('fs');
+import * as fs from 'fs';
 
 // TODO: make this take arguments
 // TODO: allow for classes in concepts/challenges
@@ -8,7 +8,8 @@ const fs = require('fs');
 const solutionName = 'HeadSpace';
 // TODO: look into setting up map or enum for this
 /* challenge || dataStructure || algorithm || designPattern || concept */
-const codeChallengeType = 'challenge';
+type CodeChallengeType = 'challenge' | 'dataStructure' | 'algorithm' | 'designPattern' | 'concepts';
+const codeChallengeType: CodeChallengeType = 'challenge';
 
 // ////UNIFORM SPEC/NOTES BOILERPLATE//////
 const spec = `${solutionName} Spec goes here!`;
@@ -154,7 +155,7 @@ switch (codeChallengeType) {
     boilerPlateTest = dataStructureTestBP;
 }
 
-module.exports.generateDefaultBoilerPlate = function generateDefaultBoilerPlate() {
+export function generateDefaultBoilerPlate(): void {
   // make folder with solution name
   // Creates /tmp/a/apple, regardless of whether `/tmp` and /tmp/a exist.
   fs.mkdir(`./${directory}/${solutionName}`, { recursive: true }, (err) => {
@@ -208,7 +209,7 @@ module.exports.generateDefaultBoilerPlate = function generateDefaultBoilerPlate(
       console.log(`${solutionName}.test.js saved!`); /* eslint-disable-line no-console */
     },
   );
-};
+}
 
 // //////////NOTES////////////
 // TODO:: make dynamic BP

@@ -1,22 +1,24 @@
-class Stack {
+class Stack<T> {
+  private items: T[];
+
   constructor() {
     this.items = [];
   }
 
   // puts new item on top of the stack
-  push(item) {
+  push(item: T): void {
     this.items.push(item);
   }
 
-  pop() {
+  pop(): T | null {
     // TODO: consolidate return
     if (!this.items.length) {
       return null;
     }
-    return this.items.pop();
+    return this.items.pop()!;
   }
 
-  peep() {
+  peep(): T | null {
     if (!this.items.length) {
       return null;
     }
@@ -24,4 +26,4 @@ class Stack {
   }
 }
 
-module.exports = Stack;
+export = Stack;
