@@ -1,18 +1,23 @@
 {
-  "name": "codepractice",
+  "name": "code-workshop",
   "version": "1.0.0",
-  "description": "Data Structure and Algorithm practice",
+  "description": "Where developers forge their skills - 80+ challenges, data structures, and algorithms",
   "main": "algorithm.js",
   "scripts": {
     "pretest": "eslint --ignore-path .gitignore .",
     "test": "jest --config jest.config.js",
+    "lint": "eslint --ignore-path .gitignore .",
+    "lint:fix": "eslint --ignore-path .gitignore . --fix",
     "binarySearch": "node -e 'require(\"./algorithms/binarySearch/binarySearch\").runBinarySearch()'",
     "bubbleSort": "node -e 'require(\"./algorithms/bubbleSort/bubbleSort\").runBubbleSort()'",
     "circleArea": "node -e 'require(\"./misc/jsOOPConcepts\").circleArea()'",
+    "connectFour:oop": "npx ts-node challenges/connectFour/oop/runConnectFourOOP.js",
+    "connectFour:functional": "npx ts-node challenges/connectFour/functional/runConnectFourFunctional.js",
     "curryMultiply": "node -e 'require(\"./misc/jsOOPConcepts\").curryMultiply()'",
     "debounce": "node -e 'require(\"./challenges/debounce/debounce\").runDebounce()'",
     "domLoaded": "node -e 'require(\"./misc/jsOOPConcepts\").domLoaded()'",
     "generateBoilerPlate": "node -e 'require(\"./helpers/generateBoilerPlate\").generateDefaultBoilerPlate()'",
+    "generate": "node generate.js",
     "heapSort": "node -e 'require(\"./algorithms/heapSort/heapSort\").runHeapSort()'",
     "iife": "node -e 'require(\"./misc/jsOOPConcepts\").iife()'",
     "iifeWindow": "node -e 'require(\"./misc/jsOOPConcepts\").iifeWindow()'",
@@ -29,22 +34,30 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/chrismcdermut/codePractice.git"
+    "url": "git+https://github.com/chrismcdermut/code-workshop.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/chrismcdermut/codePractice/issues"
+    "url": "https://github.com/chrismcdermut/code-workshop/issues"
   },
-  "homepage": "https://github.com/chrismcdermut/codePractice#readme",
+  "homepage": "https://github.com/chrismcdermut/code-workshop#readme",
   "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/lodash": "^4.17.20",
+    "@types/node": "^24.1.0",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
     "codecov": "^3.7.1",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.1.0",
     "eslint-plugin-import": "^2.20.2",
     "eslint-plugin-jest": "^23.9.0",
     "jest": "^25.4.0",
-    "prettier": "2.0.5"
+    "prettier": "2.0.5",
+    "ts-jest": "^25.5.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^4.9.5"
   },
   "dependencies": {
     "lodash": "^4.17.20",

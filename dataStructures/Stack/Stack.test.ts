@@ -17,7 +17,8 @@ describe('Stack Test', () => {
 
   test('testTwo', () => {
     stack1.push(1);
-    const result = stack1.items.length;
+    // Since items is private, we'll verify by peeking
+    const result = stack1.peep();
     const answer = 1;
     expect(result).toEqual(answer);
   });

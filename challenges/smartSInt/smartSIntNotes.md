@@ -12,7 +12,7 @@ Session
 4
 //return and array of common elements
 5
-​
+
 6
 function testCase1() {
 7
@@ -40,11 +40,11 @@ function testCase1() {
 18
 testCase2();
 19
-​
+
 20
-​
+
 21
-​
+
 22
 const findCommonElements = (array1, array2) => {
 23
@@ -96,8 +96,8 @@ const findCommonElements = (array1, array2) => {
 46
 };
 47
-​
+
 48
 hello();
 49
-​
+

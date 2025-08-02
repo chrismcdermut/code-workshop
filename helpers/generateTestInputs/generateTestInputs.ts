@@ -1,7 +1,7 @@
 const { proShuffle } = require('../../challenges/shuffleArray/shuffleArray');
 
-function generateLinearTestInputs(input, avoidedCases) {
-  const testCase = [];
+function generateLinearTestInputs(input: number, avoidedCases: Set<number>): number[] {
+  const testCase: number[] = [];
   for (let i = 0; i < input; i++) {
     if (!avoidedCases.has(i + 1)) {
       testCase.push(i + 1);
@@ -10,8 +10,8 @@ function generateLinearTestInputs(input, avoidedCases) {
   return testCase;
 }
 
-function generateShuffledTestInputs(input, avoidedCases) {
-  const testCase = [];
+function generateShuffledTestInputs(input: number, avoidedCases: Set<number>): number[] {
+  const testCase: number[] = [];
   for (let i = 0; i < input; i++) {
     if (!avoidedCases.has(i)) {
       testCase.push(i);
@@ -21,4 +21,4 @@ function generateShuffledTestInputs(input, avoidedCases) {
   return proShuffle(testCase);
 }
 
-module.exports = { generateLinearTestInputs, generateShuffledTestInputs };
+export { generateLinearTestInputs, generateShuffledTestInputs };
