@@ -18,7 +18,7 @@ describe('ConnectFour Test', () => {
 
     test('should detect available columns', () => {
       const game = new ConnectFourGame();
-      const available = ConnectFourGame.availableColumnsIndexes(game.gameBoard);
+      const available = game.getAvailableColumns();
       expect(available).toEqual([0, 1, 2, 3, 4, 5, 6]);
     });
 
@@ -130,7 +130,7 @@ describe('ConnectFour Test', () => {
       expect(game).toBeInstanceOf(ConnectFourGame);
       // Game should either have a winner or be a draw (board full)
       const hasWinner = game.gameIsWon;
-      const boardFull = ConnectFourGame.availableColumnsIndexes(game.gameBoard).length === 0;
+      const boardFull = game.getAvailableColumns().length === 0;
       expect(hasWinner || boardFull).toBe(true);
     });
 

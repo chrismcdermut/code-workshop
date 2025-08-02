@@ -18,17 +18,17 @@ class ConnectFourGame {
     ];
   }
 
-  static selectedAvailableColumnIndexRandomly(availableColumns: number[]): number {
+  private selectedAvailableColumnIndexRandomly(availableColumns: number[]): number {
     // Randomly select a column index from the available columns
     const selectedColumnIndex = Math.floor(Math.random() * availableColumns.length);
     return availableColumns[selectedColumnIndex];
   }
 
-  static availableColumnsIndexes(gameboard: (null | string)[][]): number[] {
+  getAvailableColumns(): number[] {
     // Return an array of available column indices
     const availableColumns: number[] = [];
-    for (let i = 0; i < gameboard.length; i++) {
-      if (gameboard[i][0] === null) {
+    for (let i = 0; i < this.gameBoard.length; i++) {
+      if (this.gameBoard[i][0] === null) {
         availableColumns.push(i);
       }
     }
@@ -36,12 +36,11 @@ class ConnectFourGame {
   }
 
   randomlySelectColumnIndex(): number {
-    // Get the available columns and randomly select one
-    const availableColumns = ConnectFourGame.availableColumnsIndexes(this.gameBoard);
+    const availableColumns = this.getAvailableColumns();
     if (availableColumns.length === 0) {
       throw new Error('No available columns to select from.');
     }
-    return ConnectFourGame.selectedAvailableColumnIndexRandomly(availableColumns);
+    return this.selectedAvailableColumnIndexRandomly(availableColumns);
   }
 
   // ie update board
@@ -70,7 +69,7 @@ class ConnectFourGame {
     }
   }
 
-  public findAvailableRowInColumnTopDown(selectedColumnIndex: number) {
+  findAvailableRowInColumnTopDown(selectedColumnIndex: number) {
     let lastAvailableRowIndex = -1;
     this.gameBoard[selectedColumnIndex].forEach((rowValue) => {
       if (rowValue === null) {
@@ -80,7 +79,7 @@ class ConnectFourGame {
     return lastAvailableRowIndex; // Return -1 if no available row is found
   }
 
-  public findAvailableRowInColumnBottomUp(selectedColumnIndex: number): number {
+  findAvailableRowInColumnBottomUp(selectedColumnIndex: number): number {
     let firstAvailableRowIndex = -1;
     for (let row = this.gameBoard[selectedColumnIndex].length - 1; row >= 0; row--) {
       if (this.gameBoard[selectedColumnIndex][row] === null) {
