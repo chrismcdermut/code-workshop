@@ -11,6 +11,8 @@
     "binarySearch": "node -e 'require(\"./algorithms/binarySearch/binarySearch\").runBinarySearch()'",
     "bubbleSort": "node -e 'require(\"./algorithms/bubbleSort/bubbleSort\").runBubbleSort()'",
     "circleArea": "node -e 'require(\"./misc/jsOOPConcepts\").circleArea()'",
+    "connectFour:oop": "npx ts-node challenges/connectFour/oop/runConnectFourOOP.js",
+    "connectFour:functional": "npx ts-node challenges/connectFour/functional/runConnectFourFunctional.js",
     "curryMultiply": "node -e 'require(\"./misc/jsOOPConcepts\").curryMultiply()'",
     "debounce": "node -e 'require(\"./challenges/debounce/debounce\").runDebounce()'",
     "domLoaded": "node -e 'require(\"./misc/jsOOPConcepts\").domLoaded()'",
