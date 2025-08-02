@@ -174,7 +174,7 @@ Output:
   try {
     fs.writeFileSync(
       path.join(targetPath, `${solutionName}Spec.md`),
-      specContent
+      specContent,
     );
     console.log(`📄 ${solutionName}Spec.md saved!`);
   } catch (err) {
@@ -218,7 +218,7 @@ Describe your approach here
   try {
     fs.writeFileSync(
       path.join(targetPath, `${solutionName}Notes.md`),
-      notesContent
+      notesContent,
     );
     console.log(`📝 ${solutionName}Notes.md saved!`);
   } catch (err) {
@@ -234,7 +234,7 @@ Describe your approach here
   try {
     fs.writeFileSync(
       path.join(targetPath, `${solutionName}.ts`),
-      codeTemplate
+      codeTemplate,
     );
     console.log(`📦 ${solutionName}.ts saved!`);
   } catch (err) {
@@ -250,7 +250,7 @@ Describe your approach here
   try {
     fs.writeFileSync(
       path.join(targetPath, `${solutionName}.test.ts`),
-      testTemplate
+      testTemplate,
     );
     console.log(`🧪 ${solutionName}.test.ts saved!`);
   } catch (err) {
@@ -260,7 +260,7 @@ Describe your approach here
 
   console.log(`\n✅ Successfully created ${solutionName} ${challengeType}!`);
   console.log(`📍 Location: ${targetPath}\n`);
-  console.log(`Next steps:`);
+  console.log('Next steps:');
   console.log(`1. Edit ${targetPath}/${solutionName}Spec.md to define the problem`);
   console.log(`2. Implement the solution in ${targetPath}/${solutionName}.ts`);
   console.log(`3. Add test cases to ${targetPath}/${solutionName}.test.ts`);
@@ -305,11 +305,11 @@ async function interactiveMode(): Promise<void> {
   const typeChoice = await prompt('Enter your choice (1-5): ');
 
   const typeMap: Record<string, CodeChallengeType> = {
-    '1': 'challenge',
-    '2': 'dataStructure',
-    '3': 'algorithm',
-    '4': 'designPattern',
-    '5': 'concepts',
+    1: 'challenge',
+    2: 'dataStructure',
+    3: 'algorithm',
+    4: 'designPattern',
+    5: 'concepts',
   };
 
   const challengeType = typeMap[typeChoice];
@@ -347,11 +347,11 @@ async function main(): Promise<void> {
     const typeChoice = await prompt('Enter your choice (1-5): ');
 
     const typeMap: Record<string, CodeChallengeType> = {
-      '1': 'challenge',
-      '2': 'dataStructure',
-      '3': 'algorithm',
-      '4': 'designPattern',
-      '5': 'concepts',
+      1: 'challenge',
+      2: 'dataStructure',
+      3: 'algorithm',
+      4: 'designPattern',
+      5: 'concepts',
     };
 
     const challengeType = typeMap[typeChoice];

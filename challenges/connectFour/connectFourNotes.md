@@ -28,3 +28,9 @@ Describe your approach here
 ## Common Mistakes
 - List common pitfalls
 - Edge cases to watch for
+
+## Optimizations
+- don't check for win in the first 3 moves
+- exit early on win condition
+- allow for different size boards
+- convert to bottom up logic for placing pieces
